@@ -1,7 +1,8 @@
-module id {
+module com.example.demo {
     requires javafx.controls;
     requires javafx.fxml;
 
-    opens id to javafx.fxml;
-    exports id;
+
+    opens com.example.demo to javafx.fxml;
+    exports com.example.demo;
 }
