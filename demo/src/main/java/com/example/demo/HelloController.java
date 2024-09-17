@@ -21,6 +21,7 @@ public class HelloController {
     private final static int SIZE = 50;
     private final static double CUBE_HEIGHT = 15.0;
     private final static double CUBE_WIDTH = 15.0;
+    GameOfLifeLogic gameoflife = new GameOfLifeLogic();
 
     @FXML
     public void initialize() {
@@ -50,7 +51,6 @@ public class HelloController {
                 // Draw the outline of the cube
                 gc.strokeRect(x, y, CUBE_WIDTH, CUBE_HEIGHT);
 
-                // Optionally, fill the cube (you can remove this if you don't want it filled)
                 //gc.fillRect(x, y, CUBE_WIDTH, CUBE_HEIGHT);
             }
         }
