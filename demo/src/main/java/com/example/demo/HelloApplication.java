@@ -2,22 +2,23 @@ package com.example.demo;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+public class HelloApplication extends Application{
+    public void start(Stage stage) throws Exception{
+        Parent root = (Parent)
 
-import java.io.IOException;
+                FXMLLoader.load(getClass().getResource("hello-view.fxml"));
 
-public class HelloApplication extends Application {
-    @Override
-    public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        stage.setTitle("Hello!");
+        Scene scene = new Scene(root, 1080, 1080);
+        stage.setTitle("Game Of Life");//title of the window
         stage.setScene(scene);
+        stage.setResizable(false);//makes the windows not resizeable
         stage.show();
     }
-
     public static void main(String[] args) {
-        launch();
+        launch(args);
+        System.out.println();
     }
 }
