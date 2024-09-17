@@ -18,10 +18,10 @@ public class HelloController {
     private GraphicsContext gc;
     private Canvas canvas;
 
-    private final static int SIZE = 50;
-    private final static double CUBE_HEIGHT = 15.0;
-    private final static double CUBE_WIDTH = 15.0;
-    GameOfLifeLogic gameoflife = new GameOfLifeLogic();
+    private final static int SIZE = 80;
+    private final static double CUBE_HEIGHT = 10.0;
+    private final static double CUBE_WIDTH = 10.0;
+    GameOfLifeLogic gameoflife = new GameOfLifeLogic(SIZE);
 
     @FXML
     public void initialize() {
@@ -47,11 +47,12 @@ public class HelloController {
                 // Calculate the x and y positions based on row and column
                 double x = row * CUBE_WIDTH;
                 double y = col * CUBE_HEIGHT;
-
+                if(gameoflife.matrix(row, col) == 1) {
+                    gc.fillRect(x, y, CUBE_WIDTH, CUBE_HEIGHT);
+                }else {
                 // Draw the outline of the cube
                 gc.strokeRect(x, y, CUBE_WIDTH, CUBE_HEIGHT);
-
-                //gc.fillRect(x, y, CUBE_WIDTH, CUBE_HEIGHT);
+                }
             }
         }
     }

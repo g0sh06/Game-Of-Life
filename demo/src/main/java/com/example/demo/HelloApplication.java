@@ -11,7 +11,7 @@ public class HelloApplication extends Application{
 
                 FXMLLoader.load(getClass().getResource("hello-view.fxml"));
 
-        Scene scene = new Scene(root, 960, 960);
+        Scene scene = new Scene(root, 1080, 1080);
         stage.setTitle("Game Of Life");//title of the window
         stage.setScene(scene);
         stage.setResizable(false);//makes the windows not resizeable
