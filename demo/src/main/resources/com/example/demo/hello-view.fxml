@@ -8,7 +8,7 @@
 
     <!-- Define your grid content -->
     <Button text="Start Game" GridPane.columnIndex="6" GridPane.rowIndex="3"/>
-    <Button text="Stop Game" GridPane.columnIndex="6" GridPane.rowIndex="5"/>
+    <Button id="Stop Game" text="Stop Game" GridPane.columnIndex="6" GridPane.rowIndex="5"/>
     <!-- More controls, or later dynamically add cells programmatically -->
 
 </GridPane>
