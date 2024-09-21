@@ -13,25 +13,20 @@ public class GameOfLifeLogic {
 
     public GameOfLifeLogic(int size) {
         SIZE = size;
-        currentMatrix = new int [SIZE][SIZE];
-        evolvementMatrix = new int [SIZE][SIZE];
+        currentMatrix = new int[SIZE][SIZE];
+        evolvementMatrix = new int[SIZE][SIZE];
         int randomValue = 0;
         initializeMatrix(randomValue);
-        computeNextGen();
     }
 
     public void initializeMatrix(int randomValue) {
         Random rand = new Random();
-        for(int i = 0; i < SIZE; i++) {
+        for (int i = 0; i < SIZE; i++) {
             for (int k = 0; k < SIZE; k++) {
-                randomValue = rand.nextInt(8);
+                randomValue = rand.nextInt(2); // Generates 0 or 1
                 currentMatrix[i][k] = randomValue;
             }
         }
-    }
-
-    public int matrix(int i, int j) {
-        return currentMatrix[i][j];
     }
 
     public void allNeighbors() {
@@ -39,7 +34,7 @@ public class GameOfLifeLogic {
             for (int k = 0; k < SIZE; k++) {
                 // Make sure the indices are within bounds
                 if (i - 1 >= 0 && k - 1 >= 0 && i + 1 < SIZE && k + 1 < SIZE) {
-                     countNeighbors(i, k); // Or handle boundary conditions properly inside countNeighbors()
+                    countNeighbors(i, k); // Or handle boundary conditions properly inside countNeighbors()
                 }
             }
         }
@@ -47,31 +42,51 @@ public class GameOfLifeLogic {
 
     public int countNeighbors(int cols, int rows) {
         neighbors = 0;
-        neighbors += currentMatrix[cols - 1][rows - 1];
-        neighbors += currentMatrix[cols][rows - 1];
-        neighbors += currentMatrix[cols + 1][rows - 1];
-        neighbors += currentMatrix[cols + 1][rows];
-        neighbors += currentMatrix[cols + 1][rows + 1];
-        neighbors += currentMatrix[cols][rows + 1];
-        neighbors += currentMatrix[cols - 1][rows + 1];
-        neighbors += currentMatrix[cols - 1][rows];
+        if (cols - 1 >= 0 && rows - 1 >= 0 && cols + 1 < SIZE && rows + 1 < SIZE) {
+            neighbors += evolvementMatrix[cols - 1][rows - 1];
+            neighbors += evolvementMatrix[cols][rows - 1];
+            neighbors += evolvementMatrix[cols + 1][rows - 1];
+            neighbors += evolvementMatrix[cols + 1][rows];
+            neighbors += evolvementMatrix[cols + 1][rows + 1];
+            neighbors += evolvementMatrix[cols][rows + 1];
+            neighbors += evolvementMatrix[cols - 1][rows + 1];
+            neighbors += evolvementMatrix[cols - 1][rows];
+        }
         return neighbors;
     }
 
     public void computeNextGen() {
+        copyLifeMat();
         for (int i = 0; i < SIZE; i++) {
             for (int k = 0; k < SIZE; k++) {
                 // Make sure the indices are within bounds
-                if (i - 1 >= 0 && k - 1 >= 0 && i + 1 < SIZE && k + 1 < SIZE) {
-                    countNeighbors(i, k);
-                    evolvementMatrix[i][k] = currentMatrix[i][k];
-                    if(evolvementMatrix[i][k] == 0 && countNeighbors(i, k) == 3) {
-                        evolvementMatrix[i][k] = 1;
+                neighbors = 0;
+                neighbors = countNeighbors(i, k);
+                if (currentMatrix[i][k] == ALIVE) {
+                    if (neighbors == 2 || neighbors == 3) {
+                        currentMatrix[i][k] = 1;
                     }
-
+                    if (neighbors < 2 || neighbors > 3) {
+                        currentMatrix[i][k] = 0;
+                    }
+                } else if (currentMatrix[i][k] == DEAD) {
+                    if (neighbors == 3) {
+                        currentMatrix[i][k] = 1;
+                    }
                 }
             }
         }
     }
 
+    private void copyLifeMat() {//copies lifeMatrix to copyMatrix
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                evolvementMatrix[i][j] = currentMatrix[i][j];
+            }
+        }
+    }
+
+    public int matrix(int i, int j) {
+        return currentMatrix[i][j];
+    }
 }

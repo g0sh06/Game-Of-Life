@@ -7,7 +7,7 @@
           hgap="10" vgap="10" alignment="CENTER">
 
     <!-- Define your grid content -->
-    <Button text="Start Game" GridPane.columnIndex="6" GridPane.rowIndex="3"/>
+    <Button onAction="#buttonPressed" text="Next generation" GridPane.columnIndex="6" GridPane.rowIndex="3"/>
     <Button id="Stop Game" text="Stop Game" GridPane.columnIndex="6" GridPane.rowIndex="5"/>
     <!-- More controls, or later dynamically add cells programmatically -->
 
