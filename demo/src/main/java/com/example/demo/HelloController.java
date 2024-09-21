@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -9,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 
 public class HelloController {
 
@@ -37,23 +39,32 @@ public class HelloController {
     }
 
     // Draws a grid on the Canvas
-    public void drawGrid() {
-        // Clear the canvas before drawing
-        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+    private void drawGrid() {
+        double cellWidth = canvas.getWidth() / gameoflife.SIZE;
+        double cellHeight = canvas.getHeight() / gameoflife.SIZE;
 
-        // Draw the grid
-        for (int row = 0; row < SIZE; row++) {
-            for (int col = 0; col < SIZE; col++) {
-                // Calculate the x and y positions based on row and column
-                double x = row * CUBE_WIDTH;
-                double y = col * CUBE_HEIGHT;
-                if(gameoflife.matrix(row, col) == 1) {
-                    gc.fillRect(x, y, CUBE_WIDTH, CUBE_HEIGHT);
-                }else {
-                // Draw the outline of the cube
-                gc.strokeRect(x, y, CUBE_WIDTH, CUBE_HEIGHT);
+        for (int i = 0; i < gameoflife.SIZE; i++) {
+            for (int j = 0; j < gameoflife.SIZE; j++) {
+                if (gameoflife.matrix(i, j) == 1) {
+                    // If the cell is alive, fill it with color
+                    gc.setFill(Color.BLACK);
+                    gc.fillRect(i * cellWidth, j * cellHeight, cellWidth, cellHeight);
+                } else {
+                    // If the cell is dead, clear it (or fill with a different color)
+                    gc.setFill(Color.WHITE);
+                    gc.fillRect(i * cellWidth, j * cellHeight, cellWidth, cellHeight);
                 }
+
+                //add the outline of every cell
+                gc.strokeRect(i * cellWidth, j * cellHeight, cellWidth, cellHeight);
             }
         }
+    }
+
+    @FXML
+    public void buttonPressed(ActionEvent action) {
+        gameoflife.computeNextGen();
+        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawGrid();
     }
 }
