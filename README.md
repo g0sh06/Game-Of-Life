@@ -1,2 +1,2 @@
-# Game-Of-Live
-Conway's Game of Live
+# Game-Of-Life
+Conway's Game of Life
